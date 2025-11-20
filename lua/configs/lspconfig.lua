@@ -127,6 +127,11 @@ M.servers = {
                     attributes = {
                         enable = true,
                     },
+                    ignored = {
+                        leptos_macro = {
+                            "server",
+                        },
+                    },
                 },
                 diagnostics = {
                     enable = true,
@@ -152,6 +157,9 @@ M.servers = {
                     },
                 },
                 linkedProjects = {},
+                rustfmt = {
+                    overrideCommand = { "leptosfmt", "--stdin", "--rustfmt" },
+                },
             },
         },
     },
