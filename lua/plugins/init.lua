@@ -11,10 +11,23 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
+
         config = function()
             require("nvchad.configs.lspconfig").defaults()
             require("configs.lspconfig")
+            vim.schedule(function()
+                vim.diagnostic.config({
+                    virtual_text = false,
+                })
+            end)
         end,
+    },
+
+    {
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "VeryLazy",
+        priority = 1000,
+        opts = require("configs.tiny-inline-diagnostic"),
     },
 
     {
