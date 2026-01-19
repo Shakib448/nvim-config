@@ -22,10 +22,35 @@ return {
             end)
         end,
     },
-
     {
-        "Exafunction/codeium.vim",
-        event = "BufEnter",
+        "Exafunction/windsurf.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "hrsh7th/nvim-cmp",
+        },
+        config = function()
+            require("codeium").setup({
+                enable_cmp_source = false,
+                virtual_text = {
+                    enabled = true,
+                    manual = false,
+                    filetypes = {},
+                    default_filetype_enabled = true,
+                    idle_delay = 75,
+                    virtual_text_priority = 65535,
+                    map_keys = true,
+                    accept_fallback = nil,
+                    key_bindings = {
+                        accept = "<C-g>", -- Ctrl + G
+                        accept_word = "<C-w>", -- Ctrl + W
+                        accept_line = "<C-l>", -- Ctrl + L
+                        clear = "<C-x>", -- Ctrl + X
+                        next = "<C-j>", -- Ctrl + J ✅ Mac friendly!
+                        prev = "<C-k>", -- Ctrl + K ✅ Mac friendly!
+                    },
+                },
+            })
+        end,
     },
 
     {
