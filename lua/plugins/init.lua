@@ -24,6 +24,30 @@ return {
     },
 
     {
+        "NStefan002/screenkey.nvim",
+        cmd = "Screenkey",
+        version = "*",
+        opts = {
+            win_opts = {
+                relative = "editor",
+                anchor = "NE", -- Top right corner
+                width = 40,
+                height = 3,
+                border = "rounded",
+                title = "Keys",
+                title_pos = "center",
+            },
+            compress_after = 3,
+            clear_after = 3,
+            show_leader = true,
+            group_mappings = true,
+        },
+        keys = {
+            { "<leader>sk", "<cmd>Screenkey<cr>", desc = "Toggle Screenkey" },
+        },
+    },
+
+    {
         "Exafunction/windsurf.nvim",
         lazy = false,
         dependencies = {
@@ -63,79 +87,79 @@ return {
             require("harpoon"):setup()
         end,
         keys = {
-        -- Mark file
-        {
-            "<leader>mm",
-            function()
-                require("harpoon"):list():add()
-                vim.notify("✓ Marked!", vim.log.levels.INFO)
-            end,
-            desc = "Harpoon: Mark file",
+            -- Mark file
+            {
+                "<leader>mm",
+                function()
+                    require("harpoon"):list():add()
+                    vim.notify("✓ Marked!", vim.log.levels.INFO)
+                end,
+                desc = "Harpoon: Mark file",
+            },
+            -- Menu
+            {
+                "<leader>a",
+                function()
+                    local harpoon = require("harpoon")
+                    harpoon.ui:toggle_quick_menu(harpoon:list())
+                end,
+                desc = "Harpoon: Menu",
+            },
+            -- Remove current file ✅
+            {
+                "<leader>mr",
+                function()
+                    require("harpoon"):list():remove()
+                    vim.notify("✓ Removed!", vim.log.levels.INFO)
+                end,
+                desc = "Harpoon: Remove current file",
+            },
+            -- Clear all marks ✅
+            {
+                "<leader>mc",
+                function()
+                    require("harpoon"):list():clear()
+                    vim.notify("✓ Cleared all!", vim.log.levels.WARN)
+                end,
+                desc = "Harpoon: Clear all",
+            },
+            -- Jump to files
+            {
+                "<leader>1",
+                function()
+                    require("harpoon"):list():select(1)
+                end,
+                desc = "Harpoon: File 1",
+            },
+            {
+                "<leader>2",
+                function()
+                    require("harpoon"):list():select(2)
+                end,
+                desc = "Harpoon: File 2",
+            },
+            {
+                "<leader>3",
+                function()
+                    require("harpoon"):list():select(3)
+                end,
+                desc = "Harpoon: File 3",
+            },
+            {
+                "<leader>4",
+                function()
+                    require("harpoon"):list():select(4)
+                end,
+                desc = "Harpoon: File 4",
+            },
+            {
+                "<leader>5",
+                function()
+                    require("harpoon"):list():select(5)
+                end,
+                desc = "Harpoon: File 5",
+            },
         },
-        -- Menu
-        {
-            "<leader>a",
-            function()
-                local harpoon = require("harpoon")
-                harpoon.ui:toggle_quick_menu(harpoon:list())
-            end,
-            desc = "Harpoon: Menu",
-        },
-        -- Remove current file ✅
-        {
-            "<leader>mr",
-            function()
-                require("harpoon"):list():remove()
-                vim.notify("✓ Removed!", vim.log.levels.INFO)
-            end,
-            desc = "Harpoon: Remove current file",
-        },
-        -- Clear all marks ✅
-        {
-            "<leader>mc",
-            function()
-                require("harpoon"):list():clear()
-                vim.notify("✓ Cleared all!", vim.log.levels.WARN)
-            end,
-            desc = "Harpoon: Clear all",
-        },
-        -- Jump to files
-        {
-            "<leader>1",
-            function()
-                require("harpoon"):list():select(1)
-            end,
-            desc = "Harpoon: File 1",
-        },
-        {
-            "<leader>2",
-            function()
-                require("harpoon"):list():select(2)
-            end,
-            desc = "Harpoon: File 2",
-        },
-        {
-            "<leader>3",
-            function()
-                require("harpoon"):list():select(3)
-            end,
-            desc = "Harpoon: File 3",
-        },
-        {
-            "<leader>4",
-            function()
-                require("harpoon"):list():select(4)
-            end,
-            desc = "Harpoon: File 4",
-        },
-        {
-            "<leader>5",
-            function()
-                require("harpoon"):list():select(5)
-            end,
-            desc = "Harpoon: File 5",
-        },
-    },
     },
 
     {
