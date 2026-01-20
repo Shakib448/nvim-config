@@ -12,5 +12,27 @@ M.base46 = {
     -- 	["@comment"] = { italic = true },
     -- },
 }
+M.ui = {
+    statusline = {
+        theme = "default",
+        separator_style = "default",
+        order = {
+            "mode",
+            "file",
+            "git",
+            "%=",
+            "lsp_msg",
+            "%=",
+            "diagnostics",
+            "cwd",
+            "cursor",
+        },
+        modules = {
+            lsp = function()
+                return ""
+            end,
+        },
+    },
+}
 
 return M

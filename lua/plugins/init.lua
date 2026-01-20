@@ -24,13 +24,31 @@ return {
     },
 
     {
+        "rcarriga/nvim-notify",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            local notify = require("notify")
+
+            notify.setup({
+                background_colour = "#000000",
+                timeout = 3000,
+                render = "compact",
+                stages = "fade_in_slide_out",
+            })
+
+            vim.notify = notify
+        end,
+    },
+
+    {
         "NStefan002/screenkey.nvim",
-        cmd = "Screenkey",
+        lazy = false,
         version = "*",
         opts = {
             win_opts = {
                 relative = "editor",
-                anchor = "NE", -- Top right corner
+                anchor = "NE",
                 width = 40,
                 height = 3,
                 border = "rounded",
@@ -45,6 +63,11 @@ return {
         keys = {
             { "<leader>sk", "<cmd>Screenkey<cr>", desc = "Toggle Screenkey" },
         },
+        init = function()
+            vim.defer_fn(function()
+                vim.cmd("Screenkey")
+            end, 200)
+        end,
     },
 
     {
@@ -80,6 +103,16 @@ return {
     },
 
     {
+        "letieu/btw.nvim",
+        lazy = false,
+        config = function()
+            require("btw").setup({
+                text = "Neovim BTW!",
+            })
+        end,
+    },
+
+    {
         "theprimeagen/harpoon",
         branch = "harpoon2",
         dependencies = { "nvim-lua/plenary.nvim" },
@@ -96,7 +129,6 @@ return {
                 end,
                 desc = "Harpoon: Mark file",
             },
-            -- Menu
             {
                 "<leader>a",
                 function()
@@ -105,7 +137,6 @@ return {
                 end,
                 desc = "Harpoon: Menu",
             },
-            -- Remove current file ✅
             {
                 "<leader>mr",
                 function()
@@ -114,7 +145,6 @@ return {
                 end,
                 desc = "Harpoon: Remove current file",
             },
-            -- Clear all marks ✅
             {
                 "<leader>mc",
                 function()
@@ -123,7 +153,6 @@ return {
                 end,
                 desc = "Harpoon: Clear all",
             },
-            -- Jump to files
             {
                 "<leader>1",
                 function()
@@ -167,6 +196,10 @@ return {
         event = "VeryLazy",
         priority = 1000,
         opts = require("configs.tiny-inline-diagnostic"),
+        config = function(_, opts)
+            require("tiny-inline-diagnostic").setup(opts)
+            require("configs.diagnostic-keymaps").setup()
+        end,
     },
 
     {
@@ -274,6 +307,7 @@ return {
             require("nvim-ts-autotag").setup()
         end,
     },
+
     {
         "nvimtools/none-ls.nvim",
         event = "VeryLazy",
@@ -296,21 +330,21 @@ return {
             table.insert(opts.sources, cspell.code_actions)
 
             -- Add prettierd formatting
-            table.insert(
-                opts.sources,
-                null_ls.builtins.formatting.prettierd.with({
-                    filetypes = {
-                        "javascript",
-                        "typescript",
-                        "css",
-                        "html",
-                        "json",
-                        "yaml",
-                        "markdown",
-                    },
-                })
-            )
-
+            -- table.insert(
+            --     opts.sources,
+            --     null_ls.builtins.formatting.prettierd.with({
+            --         filetypes = {
+            --             "javascript",
+            --             "typescript",
+            --             "css",
+            --             "html",
+            --             "json",
+            --             "yaml",
+            --             "markdown",
+            --         },
+            --     })
+            -- )
+            --
             -- Add the formatting on save functionality
             local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
             opts.on_attach = function(client, bufnr)
