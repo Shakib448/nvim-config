@@ -329,22 +329,6 @@ return {
             )
             table.insert(opts.sources, cspell.code_actions)
 
-            -- Add prettierd formatting
-            -- table.insert(
-            --     opts.sources,
-            --     null_ls.builtins.formatting.prettierd.with({
-            --         filetypes = {
-            --             "javascript",
-            --             "typescript",
-            --             "css",
-            --             "html",
-            --             "json",
-            --             "yaml",
-            --             "markdown",
-            --         },
-            --     })
-            -- )
-            --
             -- Add the formatting on save functionality
             local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
             opts.on_attach = function(client, bufnr)
