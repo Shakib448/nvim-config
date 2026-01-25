@@ -69,8 +69,11 @@ local options = {
                 "black",
             },
         },
+
         sqlfluff = {
+            command = "sqlfluff",
             args = { "format", "-" },
+            stdin = true,
         },
     },
 
