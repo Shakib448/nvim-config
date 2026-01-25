@@ -350,16 +350,16 @@ return {
             return opts
         end,
     },
+
     {
         "sindrets/diffview.nvim",
-        lazy = false, -- Load at startup instead of lazy loading
+        lazy = false,
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             require("diffview").setup()
         end,
     },
 
-    -- SQL Syntax & Formatting
     {
         "tpope/vim-dadbod",
         cmd = "DB",
@@ -380,7 +380,6 @@ return {
         },
     },
 
-    -- Database UI
     {
         "kristijanhusak/vim-dadbod-ui",
         dependencies = {
@@ -398,7 +397,6 @@ return {
         end,
     },
 
-    -- SQL completion
     {
         "kristijanhusak/vim-dadbod-completion",
         dependencies = "vim-dadbod",
