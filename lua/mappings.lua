@@ -120,3 +120,5 @@ map("n", "<leader>gb", function()
         end
     end)
 end, { desc = "Diff vs branch" })
+
+map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
