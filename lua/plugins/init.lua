@@ -63,11 +63,11 @@ return {
         keys = {
             { "<leader>sk", "<cmd>Screenkey<cr>", desc = "Toggle Screenkey" },
         },
-        init = function()
-            vim.defer_fn(function()
-                vim.cmd("Screenkey")
-            end, 200)
-        end,
+        -- init = function()
+        --     vim.defer_fn(function()
+        --         vim.cmd("Screenkey")
+        --     end, 200)
+        -- end,
     },
 
     {
