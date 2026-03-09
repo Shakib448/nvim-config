@@ -120,3 +120,10 @@ map("n", "<leader>gb", function()
         end
     end)
 end, { desc = "Diff vs branch" })
+
+vim.keymap.set(
+    "t",
+    "<leader>;",
+    [[<C-\><C-n><Cmd>ToggleTerm<CR>]],
+    { desc = "Hide Terminal" }
+)

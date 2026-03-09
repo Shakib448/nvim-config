@@ -70,6 +70,12 @@ return {
         -- end,
     },
 
+    -- {
+    --     "akinsho/toggleterm.nvim",
+    --     version = "*",
+    --     config = true,
+    -- },
+
     {
         "Exafunction/windsurf.nvim",
         lazy = false,
@@ -341,7 +347,8 @@ return {
                         group = augroup,
                         buffer = bufnr,
                         callback = function()
-                            vim.lsp.buf.format({ bufnr = bufnr })
+                            pcall(vim.lsp.buf.format, { bufnr = bufnr })
+                            -- vim.lsp.buf.format({ bufnr = bufnr })
                         end,
                     })
                 end
