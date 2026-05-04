@@ -21,79 +21,212 @@ return {
                 },
             },
         },
+        keys = {
+            {
+                "<leader>to",
+                "<cmd>TSToolsOrganizeImports<cr>",
+                desc = "TS: Organize imports",
+            },
+            {
+                "<leader>tu",
+                "<cmd>TSToolsRemoveUnusedImports<cr>",
+                desc = "TS: Remove unused imports",
+            },
+            {
+                "<leader>tU",
+                "<cmd>TSToolsRemoveUnused<cr>",
+                desc = "TS: Remove all unused",
+            },
+            {
+                "<leader>ta",
+                "<cmd>TSToolsAddMissingImports<cr>",
+                desc = "TS: Add missing imports",
+            },
+            {
+                "<leader>tf",
+                "<cmd>TSToolsFixAll<cr>",
+                desc = "TS: Fix all",
+            },
+            {
+                "<leader>ts",
+                "<cmd>TSToolsSortImports<cr>",
+                desc = "TS: Sort imports",
+            },
+            {
+                "<leader>tr",
+                "<cmd>TSToolsRenameFile<cr>",
+                desc = "TS: Rename file",
+            },
+            {
+                "<leader>tR",
+                "<cmd>TSToolsFileReferences<cr>",
+                desc = "TS: File references",
+            },
+            {
+                "gD",
+                "<cmd>TSToolsGoToSourceDefinition<cr>",
+                desc = "TS: Go to source definition",
+            },
+        },
+        config = function(_, opts)
+            require("typescript-tools").setup(opts)
+
+            -- Auto-organize imports on save for TS/JS files
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
+                callback = function()
+                    vim.cmd("TSToolsAddMissingImports sync")
+                    vim.cmd("TSToolsRemoveUnusedImports sync")
+                    vim.cmd("TSToolsOrganizeImports sync")
+                end,
+            })
+        end,
     },
     {
-        "mrcjkb/rustaceanvim",
-        version = "^6",
-        ft = { "rust" },
-        init = function()
-            local nvchad_lsp = require("nvchad.configs.lspconfig")
-
-            vim.g.rustaceanvim = {
-                server = {
-                    on_attach = nvchad_lsp.on_attach,
-                    capabilities = nvchad_lsp.capabilities,
-                    default_settings = {
-                        ["rust-analyzer"] = {
-                            cargo = {
-                                allFeatures = true,
-                                loadOutDirsFromCheck = true,
-                                buildScripts = { enable = true },
+    "mrcjkb/rustaceanvim",
+    version = "^6",
+    ft = { "rust" },
+    init = function()
+        local nvchad_lsp = require("nvchad.configs.lspconfig")
+        vim.g.rustaceanvim = {
+            server = {
+                on_attach = nvchad_lsp.on_attach,
+                capabilities = nvchad_lsp.capabilities,
+                default_settings = {
+                    ["rust-analyzer"] = {
+                        cargo = {
+                            allFeatures = true,
+                            loadOutDirsFromCheck = true,
+                            buildScripts = { enable = true },
+                        },
+                        check = {
+                            command = "clippy",
+                            extraArgs = {
+                                "--all-targets",
+                                "--all-features",
                             },
-                            check = {
-                                command = "clippy",
-                                extraArgs = {
-                                    "--all-targets",
-                                    "--all-features",
-                                },
-                            },
-                            imports = {
-                                granularity = { group = "module" },
-                                prefix = "self",
-                            },
-                            completion = {
-                                autoimport = { enable = true },
-                                postfix = { enable = true },
-                            },
-                            inlayHints = {
-                                chainingHints = { enable = true },
-                                parameterHints = { enable = true },
-                                typeHints = {
-                                    enable = true,
-                                    hideClosureInitialization = false,
-                                    hideNamedConstructor = false,
-                                },
-                                closingBraceHints = {
-                                    enable = true,
-                                    minLines = 10,
-                                },
-                            },
-                            procMacro = {
+                        },
+                        imports = {
+                            granularity = { group = "module" },
+                            prefix = "self",
+                        },
+                        completion = {
+                            autoimport = { enable = true },
+                            postfix = { enable = true },
+                        },
+                        inlayHints = {
+                            chainingHints = { enable = true },
+                            parameterHints = { enable = true },
+                            typeHints = {
                                 enable = true,
-                                attributes = { enable = true },
+                                hideClosureInitialization = false,
+                                hideNamedConstructor = false,
                             },
-                            lens = {
+                            closingBraceHints = {
                                 enable = true,
-                                run = { enable = true },
-                                debug = { enable = true },
-                                references = {
-                                    adt = { enable = true },
-                                    enumVariant = { enable = true },
-                                    method = { enable = true },
-                                    trait = { enable = true },
-                                },
+                                minLines = 10,
                             },
-                            hover = {
-                                actions = {
-                                    references = { enable = true },
-                                },
+                        },
+                        procMacro = {
+                            enable = true,
+                            attributes = { enable = true },
+                        },
+                        lens = {
+                            enable = true,
+                            run = { enable = true },
+                            debug = { enable = true },
+                            references = {
+                                adt = { enable = true },
+                                enumVariant = { enable = true },
+                                method = { enable = true },
+                                trait = { enable = true },
+                            },
+                        },
+                        hover = {
+                            actions = {
+                                references = { enable = true },
                             },
                         },
                     },
                 },
-            }
-        end,
+            },
+        }
+    end,
+    keys = {
+        {
+            "<leader>rm",
+            function()
+                vim.cmd.RustLsp("expandMacro")
+            end,
+            desc = "Rust: Expand macro",
+            ft = "rust",
+        },
+        {
+            "<leader>rr",
+            function()
+                vim.cmd.RustLsp("runnables")
+            end,
+            desc = "Rust: Runnables",
+            ft = "rust",
+        },
+        {
+            "<leader>rd",
+            function()
+                vim.cmd.RustLsp("debuggables")
+            end,
+            desc = "Rust: Debuggables",
+            ft = "rust",
+        },
+        {
+            "<leader>re",
+            function()
+                vim.cmd.RustLsp("explainError")
+            end,
+            desc = "Rust: Explain error",
+            ft = "rust",
+        },
+        {
+            "<leader>rc",
+            function()
+                vim.cmd.RustLsp("openCargo")
+            end,
+            desc = "Rust: Open Cargo.toml",
+            ft = "rust",
+        },
+        {
+            "<leader>rp",
+            function()
+                vim.cmd.RustLsp("parentModule")
+            end,
+            desc = "Rust: Parent module",
+            ft = "rust",
+        },
+        {
+            "<leader>rj",
+            function()
+                vim.cmd.RustLsp("joinLines")
+            end,
+            desc = "Rust: Join lines (smart)",
+            ft = "rust",
+        },
+        {
+            "K",
+            function()
+                vim.cmd.RustLsp({ "hover", "actions" })
+            end,
+            desc = "Rust: Hover with actions",
+            ft = "rust",
+        },
+        {
+            "<leader>ra",
+            function()
+                vim.cmd.RustLsp("codeAction")
+            end,
+            desc = "Rust: Code action (rust-analyzer)",
+            ft = "rust",
+        },
     },
+},,
     {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPre", "BufNewFile" },
