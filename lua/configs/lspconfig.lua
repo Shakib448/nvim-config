@@ -11,7 +11,7 @@ M.servers = {
         capabilities = capabilities,
         settings = {
             Lua = {
-                diagnostics = { enable = false },
+                diagnostics = { enable = true, globals = { "vim" } },
                 workspace = {
                     library = {
                         vim.fn.expand("$VIMRUNTIME/lua"),
