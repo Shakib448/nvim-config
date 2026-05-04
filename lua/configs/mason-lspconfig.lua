@@ -5,9 +5,7 @@ local servers_to_install = {
     "clangd",
     "gopls",
     "ts_ls",
-    "rust_analyzer",
-    "prismals", -- add it here if you want Mason to install it
-    "taplo",
+    -- "rust_analyzer",
 }
 
 require("mason-lspconfig").setup({

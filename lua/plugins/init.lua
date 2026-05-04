@@ -1,5 +1,99 @@
 return {
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        ft = {
+            "typescript",
+            "typescriptreact",
+            "javascript",
+            "javascriptreact",
+        },
+        opts = {
+            settings = {
+                tsserver_file_preferences = {
+                    includeInlayParameterNameHints = "all",
+                    includeCompletionsForModuleExports = true,
+                    quotePreference = "auto",
+                },
+                tsserver_format_options = {
+                    allowIncompleteCompletions = false,
+                    allowRenameOfImportPath = false,
+                },
+            },
+        },
+    },
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^6",
+        ft = { "rust" },
+        init = function()
+            local nvchad_lsp = require("nvchad.configs.lspconfig")
 
+            vim.g.rustaceanvim = {
+                server = {
+                    on_attach = nvchad_lsp.on_attach,
+                    capabilities = nvchad_lsp.capabilities,
+                    default_settings = {
+                        ["rust-analyzer"] = {
+                            cargo = {
+                                allFeatures = true,
+                                loadOutDirsFromCheck = true,
+                                buildScripts = { enable = true },
+                            },
+                            check = {
+                                command = "clippy",
+                                extraArgs = {
+                                    "--all-targets",
+                                    "--all-features",
+                                },
+                            },
+                            imports = {
+                                granularity = { group = "module" },
+                                prefix = "self",
+                            },
+                            completion = {
+                                autoimport = { enable = true },
+                                postfix = { enable = true },
+                            },
+                            inlayHints = {
+                                chainingHints = { enable = true },
+                                parameterHints = { enable = true },
+                                typeHints = {
+                                    enable = true,
+                                    hideClosureInitialization = false,
+                                    hideNamedConstructor = false,
+                                },
+                                closingBraceHints = {
+                                    enable = true,
+                                    minLines = 10,
+                                },
+                            },
+                            procMacro = {
+                                enable = true,
+                                attributes = { enable = true },
+                            },
+                            lens = {
+                                enable = true,
+                                run = { enable = true },
+                                debug = { enable = true },
+                                references = {
+                                    adt = { enable = true },
+                                    enumVariant = { enable = true },
+                                    method = { enable = true },
+                                    trait = { enable = true },
+                                },
+                            },
+                            hover = {
+                                actions = {
+                                    references = { enable = true },
+                                },
+                            },
+                        },
+                    },
+                },
+            }
+        end,
+    },
     {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPre", "BufNewFile" },
