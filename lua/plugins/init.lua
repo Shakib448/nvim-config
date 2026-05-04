@@ -83,150 +83,150 @@ return {
         end,
     },
     {
-    "mrcjkb/rustaceanvim",
-    version = "^6",
-    ft = { "rust" },
-    init = function()
-        local nvchad_lsp = require("nvchad.configs.lspconfig")
-        vim.g.rustaceanvim = {
-            server = {
-                on_attach = nvchad_lsp.on_attach,
-                capabilities = nvchad_lsp.capabilities,
-                default_settings = {
-                    ["rust-analyzer"] = {
-                        cargo = {
-                            allFeatures = true,
-                            loadOutDirsFromCheck = true,
-                            buildScripts = { enable = true },
-                        },
-                        check = {
-                            command = "clippy",
-                            extraArgs = {
-                                "--all-targets",
-                                "--all-features",
+        "mrcjkb/rustaceanvim",
+        version = "^6",
+        ft = { "rust" },
+        init = function()
+            local nvchad_lsp = require("nvchad.configs.lspconfig")
+            vim.g.rustaceanvim = {
+                server = {
+                    on_attach = nvchad_lsp.on_attach,
+                    capabilities = nvchad_lsp.capabilities,
+                    default_settings = {
+                        ["rust-analyzer"] = {
+                            cargo = {
+                                allFeatures = true,
+                                loadOutDirsFromCheck = true,
+                                buildScripts = { enable = true },
                             },
-                        },
-                        imports = {
-                            granularity = { group = "module" },
-                            prefix = "self",
-                        },
-                        completion = {
-                            autoimport = { enable = true },
-                            postfix = { enable = true },
-                        },
-                        inlayHints = {
-                            chainingHints = { enable = true },
-                            parameterHints = { enable = true },
-                            typeHints = {
+                            check = {
+                                command = "clippy",
+                                extraArgs = {
+                                    "--all-targets",
+                                    "--all-features",
+                                },
+                            },
+                            imports = {
+                                granularity = { group = "module" },
+                                prefix = "self",
+                            },
+                            completion = {
+                                autoimport = { enable = true },
+                                postfix = { enable = true },
+                            },
+                            inlayHints = {
+                                chainingHints = { enable = true },
+                                parameterHints = { enable = true },
+                                typeHints = {
+                                    enable = true,
+                                    hideClosureInitialization = false,
+                                    hideNamedConstructor = false,
+                                },
+                                closingBraceHints = {
+                                    enable = true,
+                                    minLines = 10,
+                                },
+                            },
+                            procMacro = {
                                 enable = true,
-                                hideClosureInitialization = false,
-                                hideNamedConstructor = false,
+                                attributes = { enable = true },
                             },
-                            closingBraceHints = {
+                            lens = {
                                 enable = true,
-                                minLines = 10,
+                                run = { enable = true },
+                                debug = { enable = true },
+                                references = {
+                                    adt = { enable = true },
+                                    enumVariant = { enable = true },
+                                    method = { enable = true },
+                                    trait = { enable = true },
+                                },
                             },
-                        },
-                        procMacro = {
-                            enable = true,
-                            attributes = { enable = true },
-                        },
-                        lens = {
-                            enable = true,
-                            run = { enable = true },
-                            debug = { enable = true },
-                            references = {
-                                adt = { enable = true },
-                                enumVariant = { enable = true },
-                                method = { enable = true },
-                                trait = { enable = true },
-                            },
-                        },
-                        hover = {
-                            actions = {
-                                references = { enable = true },
+                            hover = {
+                                actions = {
+                                    references = { enable = true },
+                                },
                             },
                         },
                     },
                 },
+            }
+        end,
+        keys = {
+            {
+                "<leader>rm",
+                function()
+                    vim.cmd.RustLsp("expandMacro")
+                end,
+                desc = "Rust: Expand macro",
+                ft = "rust",
             },
-        }
-    end,
-    keys = {
-        {
-            "<leader>rm",
-            function()
-                vim.cmd.RustLsp("expandMacro")
-            end,
-            desc = "Rust: Expand macro",
-            ft = "rust",
-        },
-        {
-            "<leader>rr",
-            function()
-                vim.cmd.RustLsp("runnables")
-            end,
-            desc = "Rust: Runnables",
-            ft = "rust",
-        },
-        {
-            "<leader>rd",
-            function()
-                vim.cmd.RustLsp("debuggables")
-            end,
-            desc = "Rust: Debuggables",
-            ft = "rust",
-        },
-        {
-            "<leader>re",
-            function()
-                vim.cmd.RustLsp("explainError")
-            end,
-            desc = "Rust: Explain error",
-            ft = "rust",
-        },
-        {
-            "<leader>rc",
-            function()
-                vim.cmd.RustLsp("openCargo")
-            end,
-            desc = "Rust: Open Cargo.toml",
-            ft = "rust",
-        },
-        {
-            "<leader>rp",
-            function()
-                vim.cmd.RustLsp("parentModule")
-            end,
-            desc = "Rust: Parent module",
-            ft = "rust",
-        },
-        {
-            "<leader>rj",
-            function()
-                vim.cmd.RustLsp("joinLines")
-            end,
-            desc = "Rust: Join lines (smart)",
-            ft = "rust",
-        },
-        {
-            "K",
-            function()
-                vim.cmd.RustLsp({ "hover", "actions" })
-            end,
-            desc = "Rust: Hover with actions",
-            ft = "rust",
-        },
-        {
-            "<leader>ra",
-            function()
-                vim.cmd.RustLsp("codeAction")
-            end,
-            desc = "Rust: Code action (rust-analyzer)",
-            ft = "rust",
+            {
+                "<leader>rr",
+                function()
+                    vim.cmd.RustLsp("runnables")
+                end,
+                desc = "Rust: Runnables",
+                ft = "rust",
+            },
+            {
+                "<leader>rd",
+                function()
+                    vim.cmd.RustLsp("debuggables")
+                end,
+                desc = "Rust: Debuggables",
+                ft = "rust",
+            },
+            {
+                "<leader>re",
+                function()
+                    vim.cmd.RustLsp("explainError")
+                end,
+                desc = "Rust: Explain error",
+                ft = "rust",
+            },
+            {
+                "<leader>rc",
+                function()
+                    vim.cmd.RustLsp("openCargo")
+                end,
+                desc = "Rust: Open Cargo.toml",
+                ft = "rust",
+            },
+            {
+                "<leader>rp",
+                function()
+                    vim.cmd.RustLsp("parentModule")
+                end,
+                desc = "Rust: Parent module",
+                ft = "rust",
+            },
+            {
+                "<leader>rj",
+                function()
+                    vim.cmd.RustLsp("joinLines")
+                end,
+                desc = "Rust: Join lines (smart)",
+                ft = "rust",
+            },
+            {
+                "K",
+                function()
+                    vim.cmd.RustLsp({ "hover", "actions" })
+                end,
+                desc = "Rust: Hover with actions",
+                ft = "rust",
+            },
+            {
+                "<leader>ra",
+                function()
+                    vim.cmd.RustLsp("codeAction")
+                end,
+                desc = "Rust: Code action (rust-analyzer)",
+                ft = "rust",
+            },
         },
     },
-},,
     {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPre", "BufNewFile" },
