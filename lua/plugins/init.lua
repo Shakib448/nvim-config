@@ -46,6 +46,23 @@ return {
                 "<cmd>ClaudeCodeDiffDeny<cr>",
                 desc = "Deny diff",
             },
+            {
+                "<leader>lh",
+                function()
+                    local harpoon = require("harpoon")
+                    local list = harpoon:list()
+                    for _, item in ipairs(list.items) do
+                        vim.cmd(
+                            "ClaudeCodeAdd " .. vim.fn.fnameescape(item.value)
+                        )
+                    end
+                    vim.notify(
+                        "Added " .. #list.items .. " Harpoon files to Claude",
+                        vim.log.levels.INFO
+                    )
+                end,
+                desc = "Claude: add all Harpoon files",
+            },
         },
     },
     {
@@ -302,9 +319,16 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
-
         config = function()
             require("nvchad.configs.lspconfig").defaults()
+
+            vim.schedule(function()
+                for _, client in ipairs(vim.lsp.get_clients({ name = "ts_ls" })) do
+                    client.stop()
+                end
+                pcall(vim.lsp.enable, "ts_ls", false)
+            end)
+
             require("configs.lspconfig")
             vim.schedule(function()
                 vim.diagnostic.config({

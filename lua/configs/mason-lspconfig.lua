@@ -4,8 +4,8 @@ local servers_to_install = {
     "lua_ls",
     "clangd",
     "gopls",
-    "ts_ls",
-    -- "rust_analyzer",
+    -- "ts_ls",
+    "rust_analyzer",
 }
 
 require("mason-lspconfig").setup({
