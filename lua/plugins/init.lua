@@ -1,5 +1,54 @@
 return {
     {
+        "coder/claudecode.nvim",
+        dependencies = { "folke/snacks.nvim" },
+        config = true,
+        keys = {
+            { "<leader>l", nil, desc = "AI/Claude Code" },
+            {
+                "<leader>lc",
+                "<cmd>ClaudeCode<cr>",
+                desc = "Toggle Claude",
+            },
+            {
+                "<leader>lf",
+                "<cmd>ClaudeCodeFocus<cr>",
+                desc = "Focus Claude",
+            },
+            {
+                "<leader>lr",
+                "<cmd>ClaudeCode --resume<cr>",
+                desc = "Resume Claude",
+            },
+            {
+                "<leader>lC",
+                "<cmd>ClaudeCode --continue<cr>",
+                desc = "Continue last session",
+            },
+            {
+                "<leader>lb",
+                "<cmd>ClaudeCodeAdd %<cr>",
+                desc = "Add current buffer",
+            },
+            {
+                "<leader>ls",
+                "<cmd>ClaudeCodeSend<cr>",
+                mode = "v",
+                desc = "Send selection",
+            },
+            {
+                "<leader>la",
+                "<cmd>ClaudeCodeDiffAccept<cr>",
+                desc = "Accept diff",
+            },
+            {
+                "<leader>ld",
+                "<cmd>ClaudeCodeDiffDeny<cr>",
+                desc = "Deny diff",
+            },
+        },
+    },
+    {
         "pmizio/typescript-tools.nvim",
         dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
         ft = {
@@ -74,10 +123,23 @@ return {
             -- Auto-organize imports on save for TS/JS files
             vim.api.nvim_create_autocmd("BufWritePre", {
                 pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
-                callback = function()
-                    vim.cmd("TSToolsAddMissingImports sync")
-                    vim.cmd("TSToolsRemoveUnusedImports sync")
-                    vim.cmd("TSToolsOrganizeImports sync")
+                callback = function(args)
+                    -- Skip if typescript-tools isn't attached to this buffer yet
+                    local clients = vim.lsp.get_clients({
+                        bufnr = args.buf,
+                        name = "typescript-tools",
+                    })
+                    if #clients == 0 then
+                        return
+                    end
+
+                    -- pcall each one so a transient nil response doesn't abort the save
+                    pcall(vim.api.nvim_command, "TSToolsAddMissingImports sync")
+                    pcall(
+                        vim.api.nvim_command,
+                        "TSToolsRemoveUnusedImports sync"
+                    )
+                    pcall(vim.api.nvim_command, "TSToolsOrganizeImports sync")
                 end,
             })
         end,
