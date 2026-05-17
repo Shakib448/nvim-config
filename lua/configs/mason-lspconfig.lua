@@ -5,7 +5,7 @@ local servers_to_install = {
     "clangd",
     "gopls",
     -- "ts_ls",
-    "rust_analyzer",
+    -- "rust_analyzer",
 }
 
 require("mason-lspconfig").setup({
@@ -29,6 +29,8 @@ require("mason-lspconfig").setup({
             vim.lsp.config[server_name] = config
             vim.lsp.enable(server_name)
         end,
+
+        ["rust_analyzer"] = function() end,
     },
 })
 local prisma_config = lsp_configs.servers.prismals

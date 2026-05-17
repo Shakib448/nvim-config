@@ -57,14 +57,6 @@ M.servers = {
         },
     },
 
-    -- ts_ls = {
-    --     on_attach = on_attach,
-    --     capabilities = capabilities,
-    --     init_options = {
-    --         preferences = { disableSuggestions = true },
-    --     },
-    -- },
-
     prismals = {
         on_attach = on_attach,
         on_init = on_init,
@@ -76,93 +68,6 @@ M.servers = {
             },
         },
     },
-
-    -- rust_analyzer = {
-    --     on_attach = on_attach,
-    --     on_init = on_init,
-    --     capabilities = capabilities,
-    --     settings = {
-    --         ["rust-analyzer"] = {
-    --             assist = {
-    --                 importEnforceGranularity = true,
-    --                 importPrefix = "crate",
-    --             },
-    --             cargo = {
-    --                 allFeatures = true,
-    --                 loadOutDirsFromCheck = true,
-    --                 buildScripts = {
-    --                     enable = true,
-    --                 },
-    --                 workspace = {},
-    --             },
-    --             checkOnSave = true,
-    --             check = {
-    --                 command = "clippy",
-    --                 extraArgs = { "--all-targets", "--all-features" },
-    --             },
-    --             completion = {
-    --                 autoimport = { enable = true },
-    --                 postfix = { enable = true },
-    --             },
-    --             imports = {
-    --                 granularity = { group = "module" },
-    --                 prefix = "self",
-    --             },
-    --             inlayHints = {
-    --                 locationLinks = false,
-    --                 chainingHints = { enable = true },
-    --                 closingBraceHints = {
-    --                     enable = true,
-    --                     minLines = 10,
-    --                 },
-    --                 parameterHints = { enable = true },
-    --                 typeHints = {
-    --                     enable = true,
-    --                     hideClosureInitialization = false,
-    --                     hideNamedConstructor = false,
-    --                 },
-    --             },
-    --             procMacro = {
-    --                 enable = true,
-    --                 attributes = {
-    --                     enable = true,
-    --                 },
-    --                 ignored = {
-    --                     leptos_macro = {
-    --                         "server",
-    --                     },
-    --                 },
-    --             },
-    --             diagnostics = {
-    --                 enable = true,
-    --                 experimental = {
-    --                     enable = true,
-    --                 },
-    --                 disabled = {},
-    --             },
-    --             lens = {
-    --                 enable = true,
-    --                 references = {
-    --                     adt = { enable = true },
-    --                     enumVariant = { enable = true },
-    --                     method = { enable = true },
-    --                     trait = { enable = true },
-    --                 },
-    --                 run = { enable = true },
-    --                 debug = { enable = true },
-    --             },
-    --             hover = {
-    --                 actions = {
-    --                     references = { enable = true },
-    --                 },
-    --             },
-    --             linkedProjects = {},
-    --             rustfmt = {
-    --                 overrideCommand = { "leptosfmt", "--stdin", "--rustfmt" },
-    --             },
-    --         },
-    --     },
-    -- },
 
     taplo = {
         on_attach = on_attach,

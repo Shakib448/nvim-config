@@ -321,14 +321,6 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("nvchad.configs.lspconfig").defaults()
-
-            vim.schedule(function()
-                for _, client in ipairs(vim.lsp.get_clients({ name = "ts_ls" })) do
-                    client.stop()
-                end
-                pcall(vim.lsp.enable, "ts_ls", false)
-            end)
-
             require("configs.lspconfig")
             vim.schedule(function()
                 vim.diagnostic.config({
