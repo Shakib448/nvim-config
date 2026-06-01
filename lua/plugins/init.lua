@@ -1,5 +1,15 @@
 return {
     {
+        "MagicDuck/grug-far.nvim",
+        cmd = "GrugFar",
+        keys = {
+            { "<leader>sr", "<cmd>GrugFar<cr>", desc = "Search & Replace" },
+        },
+        config = function()
+            require("grug-far").setup({})
+        end,
+    },
+    {
         "coder/claudecode.nvim",
         dependencies = { "folke/snacks.nvim" },
         config = true,
