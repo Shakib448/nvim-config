@@ -14,8 +14,13 @@ return {
         dependencies = { "folke/snacks.nvim" },
         opts = {
             terminal = {
-                split_side = "bottom", -- not directly supported; see note
-                split_width_percentage = 0.30,
+                provider = "snacks",
+                snacks_win_opts = {
+                    position = "bottom",
+                    height = 0.4,
+                    width = 1.0,
+                    border = "single",
+                },
             },
         },
         config = true,
