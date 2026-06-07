@@ -12,6 +12,12 @@ return {
     {
         "coder/claudecode.nvim",
         dependencies = { "folke/snacks.nvim" },
+        opts = {
+            terminal = {
+                split_side = "bottom", -- not directly supported; see note
+                split_width_percentage = 0.30,
+            },
+        },
         config = true,
         keys = {
             { "<leader>l", nil, desc = "AI/Claude Code" },
