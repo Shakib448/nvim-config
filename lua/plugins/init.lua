@@ -190,7 +190,12 @@ return {
             local nvchad_lsp = require("nvchad.configs.lspconfig")
             vim.g.rustaceanvim = {
                 server = {
-                    on_attach = nvchad_lsp.on_attach,
+                    on_attach = function(client, bufnr)
+                        nvchad_lsp.on_attach(client, bufnr)
+                        if client:supports_method("textDocument/inlayHint") then
+                            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                        end
+                    end,
                     capabilities = nvchad_lsp.capabilities,
                     default_settings = {
                         ["rust-analyzer"] = {
@@ -323,6 +328,17 @@ return {
                     vim.cmd.RustLsp("codeAction")
                 end,
                 desc = "Rust: Code action (rust-analyzer)",
+                ft = "rust",
+            },
+            {
+                "<leader>rh",
+                function()
+                    local bufnr = vim.api.nvim_get_current_buf()
+                    local enabled =
+                        vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+                    vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
+                end,
+                desc = "Rust: Toggle inlay hints",
                 ft = "rust",
             },
         },
